@@ -10,11 +10,11 @@ const router = express.Router()
 
 //Authentication paths
 router.get('/auth', checkConnection)
-router.get('/auth/login', validateAuthInfo(), validate, authUser)
+router.post('/auth', /*validateAuthInfo(), validate,*/ authUser)
 
 //User paths
 router.get('/users', getUsers)
-router.post('/users', postUser)
+router.post('/users', validateUser(), validate, postUser)
 
 //Task CRUD paths
 router.get('/tasks', getTasks)
