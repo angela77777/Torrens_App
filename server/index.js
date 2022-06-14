@@ -26,7 +26,7 @@ app.use('/api', jwtMiddleware({
         }
         return null;
     }
-}).unless({path: [{url: "/api/auth/login", method: 'POST'}, {url: "/api/users/", method: 'POST'}]}), routes)
+}).unless({path: [{url: "/api/auth/", method: 'POST'}, {url: "/api/users/", method: 'POST'}]}), routes)
 
 //Authenticate database
 try {

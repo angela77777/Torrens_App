@@ -1,0 +1,64 @@
+/** CSS */
+nav {
+  background-color: var(--secondary-color);
+  display: flex;
+  flex-direction: row;
+  align-items: space-between;
+  box-shadow: 0px 1px 5px 1px rgba(0, 0, 0, 0.3);
+  width: 100%;
+}
+
+/** Left content */
+nav img {
+  height: 3rem;
+}
+
+/** Notifications */
+.bell {
+  height: 1.5rem;
+}
+
+.btn-notification {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bell-badge {
+  position: absolute;
+  top: -0.2px;
+  right: -0.2px;
+  height: 1.2rem;
+  width: 1.2rem;
+  font-size: 0.6rem;
+  font-weight: 600;
+  color: var(--secondary-color);
+  background-color: var(--hover-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+}
+
+.btn-notification:hover {
+  transform: scale(1.05);
+  transition: 0.2s;
+}
+
+/** User name dropdown */
+.btn-link {
+  text-decoration: none;
+  color: var(--primary-color);
+}
+
+.btn-link:hover {
+  color: var(--hover-color);
+  transform: scale(1.02);
+  transition: 0.2s;
+}
+
+.logout {
+  margin-right: 0.8rem;
+  color: var(--primary-color);
+}

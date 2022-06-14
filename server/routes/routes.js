@@ -10,7 +10,7 @@ const router = express.Router()
 
 //Authentication paths
 router.get('/auth', checkConnection)
-router.post('/auth', /*validateAuthInfo(), validate,*/ authUser)
+router.post('/auth', validateAuthInfo(), validate, authUser)
 
 //User paths
 router.get('/users', getUsers)

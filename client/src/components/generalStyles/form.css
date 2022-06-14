@@ -1,0 +1,77 @@
+/** General container */
+.form-container {
+  background: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 1rem;
+  margin-top: 2rem;
+  min-height: 50%;
+  max-height: 80%;
+  padding: 1.5rem;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+/** Text field behaviour */
+.textfield-group {
+  border-bottom: 1px var(--primary-color) solid;
+  transition: border-bottom 1.15s ease-out;
+}
+
+.textfield-group::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  display: block;
+  width: 0;
+  height: 2px;
+  background: var(--hover-color);
+  transition: width 0.3s;
+}
+
+.textfield-group:focus-within::after {
+  width: 100%;
+}
+
+/** Buttons */
+.submit-button {
+  width: 100%;
+  margin-top: 1rem;
+  background: var(--primary-color);
+  color: var(--secondary-color);
+}
+
+.submit-button:hover {
+  color: var(--secondary-color);
+  background: var(--hover-color);
+}
+
+.secondary-button {
+  font-weight: bold;
+  color: var(--text-color);
+  border: 2px var(--primary-color) solid;
+}
+
+.secondary-button:hover {
+  color: var(--primary-color);
+}
+
+/** CSS helpers */
+.clear-decorations {
+  background: none;
+  border: none;
+  outline: none;
+}
+
+.clear-outline {
+  border: none;
+  outline: none;
+}
+
+.primary-color {
+  color: var(--primary-color);
+}

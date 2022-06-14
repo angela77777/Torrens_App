@@ -16,7 +16,6 @@ dotenv.config()
  */
 export const authUser = async (req, res) => {
     try {
-        console.log(req.body)
         const { email, password } = req.body
         let user = await User.findOne({where: {
                 email: email, password: crypto.createHmac('sha256', process.env.TOKEN_SECRET)
@@ -52,7 +51,7 @@ export const authUser = async (req, res) => {
 export const checkConnection = async (req, res) => {
     try {
         const user = await User.findByPk(req.auth.user.id, { attributes: { exclude: ['password'] } })
-        return res.status(200).json(user)
+        return res.status(200).json({user: user})
     } catch (err) {
         return res.status(500).json({ message: err.message })
     }
