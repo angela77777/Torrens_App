@@ -1,12 +1,3 @@
-body {
-  margin: 0;
-  font-family: 'Montserrat', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: var(--background-color);
-  color: var(--text-color);
-}
-
 :root {
   --primary-color: #ff5000;
   --secondary-color: #ffffff;
@@ -14,5 +5,14 @@ body {
   --hover-color: #f24400;
   --text-color: #393939;
   --light: #ff844c;
-  --light2: #fff9f6;
+  --light2: #fffaf7;
+}
+
+body {
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--background-color);
+  color: var(--text-color);
 }

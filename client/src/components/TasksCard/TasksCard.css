@@ -1,0 +1,15 @@
+/** Table items */
+.btn-delete-task {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.text-task {
+  text-align: justify;
+}
+.check-box {
+  align-items: center;
+  justify-content: center;
+}

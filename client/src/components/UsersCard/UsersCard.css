@@ -1,0 +1,58 @@
+/** General container */
+.abs-center {
+  border-radius: 1rem;
+  padding: 1.5rem;
+  min-height: 70vh;
+  margin: 3.8rem 0 0 12rem;
+}
+.card {
+  border: none;
+  padding: 1.5rem;
+}
+
+/** Table */
+.table {
+  text-align: center;
+  color: var(--text-color);
+  border-collapse: separate;
+  border-spacing: 0px;
+  min-width: max-content;
+}
+.table-wrapper {
+  max-height: 290px;
+  overflow-y: scroll;
+  overflow-x: scroll;
+  margin: 20px;
+}
+thead tr {
+  background-color: var(--primary-color);
+}
+th {
+  font-weight: 600;
+  top: 0px;
+  color: var(--secondary-color);
+}
+tbody tr:hover {
+  background-color: var(--light2);
+}
+td span {
+  justify-content: center;
+  align-self: center;
+}
+th,
+td {
+  padding: 0.5rem;
+  height: 4rem;
+  vertical-align: middle;
+}
+.table-titles {
+  border: 2px;
+}
+
+/** State - True / False */
+.state-connected {
+  color: #00a700;
+}
+.state-disconnected {
+  color: #c30c00;
+}

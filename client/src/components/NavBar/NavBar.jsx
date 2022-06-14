@@ -10,15 +10,15 @@ import useTasks from '../../context/TasksProvider.jsx';
 
 const NavBar = () => {
   const { auth, logOut } = useAuth();
-  const { tasks, clearTasks } = useTasks()
-  
+  const { tasks, clearTasks } = useTasks();
+
   const handleClick = () => {
-    clearTasks()
-    logOut()
-  }
+    clearTasks();
+    logOut();
+  };
 
   return (
-    <nav className="navbar bg-light position-absolute top-0">
+    <nav className="navbar bg-light position-fixed top-0">
       <div className="d-flex justify-content-between align-items-center vw-100 px-4">
         <img src="../../logo.svg" alt="logo"></img>
         {auth.user ? (
@@ -31,7 +31,9 @@ const NavBar = () => {
                     className="primary-color bell"
                   />
                 </span>
-                {tasks.rows.length > 0 ? <span className="bell-badge">{ tasks.pending.length }</span> : null}
+                {tasks.rows.length > 0 ? (
+                  <span className="bell-badge">{tasks.pending.length}</span>
+                ) : null}
               </button>
               <button
                 type="button"
@@ -40,11 +42,15 @@ const NavBar = () => {
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-              {auth.user.names}
+                {auth.user.names}
               </button>
               <ul className="dropdown-menu dropdown-menu-end">
                 <li>
-                  <button className="dropdown-item" type="button" onClick={handleClick}>
+                  <button
+                    className="dropdown-item"
+                    type="button"
+                    onClick={handleClick}
+                  >
                     <span className="input-group-text clear-decorations h-100">
                       <FontAwesomeIcon
                         icon={faArrowAltCircleRight}
