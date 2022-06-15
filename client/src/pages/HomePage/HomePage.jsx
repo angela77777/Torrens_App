@@ -4,7 +4,6 @@ import NavBar from '../../components/NavBar/NavBar.jsx';
 import SideBar from '../../components/SideBar/SideBar.jsx';
 import useStartPage from '../../customHooks/useStartPage';
 import HomeComponent from '../../components/HomeComponent/HomeComponent.jsx';
-import useTasks from '../../context/TasksProvider.jsx';
 
 //Principal view when user is login
 const HomePage = () => {

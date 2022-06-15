@@ -5,10 +5,12 @@ import SideBar from '../../components/SideBar/SideBar.jsx';
 import UsersCard from '../../components/UsersCard/UsersCard.jsx';
 import useStartPage from '../../customHooks/useStartPage';
 
+//View where admins can see al the users in the app
 const UsersPage = () => {
   const { auth } = useAuth();
   useStartPage(true, true)
 
+  //Load the page
   if (auth.user && auth.token && auth.user?.role === 'administrator') {
     return (
       <div>

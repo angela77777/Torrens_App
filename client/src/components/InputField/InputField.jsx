@@ -1,5 +1,17 @@
 import React from 'react';
 
+/**
+ * @description General input field to use in forms
+ * @param {String} type the input type
+ * @param {String} placeholder the input placeholder
+ * @param {String} ariaLabel to allow accessibility
+ * @param {String} name input identificator
+ * @param {String} inputClass custom class names for the input
+ * @param {Boolean} required indicates if input is mandatory
+ * @param {String} invalidInfo data to present tooltip errors for forms
+ * @param {children} children the child view
+ * @returns
+ */
 const InputField = ({
   type,
   placeholder,

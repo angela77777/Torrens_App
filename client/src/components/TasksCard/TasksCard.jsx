@@ -8,6 +8,7 @@ import InputField from '../InputField/InputField.jsx';
 import useTasks from '../../context/TasksProvider';
 import useAuth from '../../context/AuthProvider';
 
+// Principal component to present the Tasks CRUD
 const TasksCard = () => {
   const { auth } = useAuth();
   const [editState, setEditState] = useState(false);
@@ -17,7 +18,7 @@ const TasksCard = () => {
   const handleCreateSubmit = (event) => {
     event.preventDefault();
     const { taskName, state } = event.target.elements;
-    createTask(auth.token, {
+    createTask({
       name: taskName.value,
       completed: state.value,
       userId: auth.user.id,
@@ -26,12 +27,12 @@ const TasksCard = () => {
   };
 
   const handleSaveSubmit = () => {
-    saveTasks(auth.token);
+    saveTasks();
     setEditState(false);
   };
 
   const onClickMore = () => {
-    loadTasks(tasks.page + 1, auth.token);
+    loadTasks(tasks.page + 1);
   };
 
   const listItems = tasks.rows?.map((task, index) => (
@@ -142,8 +143,16 @@ const TasksCard = () => {
   );
 };
 
+/**
+ * @description the component row to present information dynamically
+ * @param {Boolean} editState indicates if the view is in edit mode
+ * @param {*} task the record to be shown
+ * @param {Function} updateTask context function to allow edit the information
+ * @param {Function} deleteTask context function to allow delete the information
+ * @returns row with user information
+ */
 export const TaskRow = ({ editState, task, updateTask, deleteTask }) => {
-  const { auth } = useAuth();
+  const [checkState, setCheckState] = useState(task.completed);
 
   const onHandleChange = (event) => {
     let temp = {
@@ -155,15 +164,17 @@ export const TaskRow = ({ editState, task, updateTask, deleteTask }) => {
     };
 
     const name = event.target.name;
-    const value =
-      name === 'completed' ? Boolean(event.target.value) : event.target.value;
+    let value = event.target.value;
+    if (name === 'completed') {
+      value = !checkState;
+      setCheckState(!checkState);
+    }
     temp[name] = value;
-
     updateTask(temp);
   };
 
   const onDelete = () => {
-    deleteTask(auth.token, task);
+    deleteTask(task);
   };
 
   return (
@@ -174,7 +185,7 @@ export const TaskRow = ({ editState, task, updateTask, deleteTask }) => {
             type="checkbox"
             name="completed"
             className="form-check-input"
-            checked={task.completed}
+            checked={checkState}
             id="flexCheckDisabled"
             disabled={!editState}
             onChange={onHandleChange}

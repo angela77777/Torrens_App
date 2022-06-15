@@ -8,7 +8,10 @@ import useAuth from '../../context/AuthProvider';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 
-const LoginForm = (props) => {
+/**
+ * @description Form component to allow the user login in the system
+ */
+const LoginForm = () => {
   const { auth, authUser, cleanError } = useAuth();
   const [formErrors, setErrors] = useState({});
 

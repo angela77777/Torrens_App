@@ -22,6 +22,10 @@ export function AuthProvider({ children }) {
         })
     }, [])
 
+    /**
+     * @description Check the current token with the server to allow or not the auto-login
+     * @param {*} token record in local storage
+     */
     const checkSession = async (token) => {
         await axios({
             method: 'get',
@@ -42,6 +46,11 @@ export function AuthProvider({ children }) {
         })
     }
 
+    /**
+     * @description Allos login in the page with email and password (confirm with the service and create a token)
+     * @param {String} email user email
+     * @param {String} password user password
+     */
     const authUser = async (email, password) => {
         await axios({
             method: 'post',
@@ -85,6 +94,9 @@ export function AuthProvider({ children }) {
         })
     }
 
+    /**
+     * @description allow cleans the error information
+     */
     const cleanError = () => {
         dispatch({
             type: "ERROR-PRESENTED",
@@ -92,6 +104,9 @@ export function AuthProvider({ children }) {
         })
     }
 
+    /**
+     * @description deletes the token and reset all auth data
+     */
     const logOut = () => {
         localStorage.removeItem("token")
         dispatch({

@@ -5,10 +5,12 @@ import SideBar from '../../components/SideBar/SideBar.jsx';
 import TasksCard from '../../components/TasksCard/TasksCard.jsx';
 import useStartPage from '../../customHooks/useStartPage';
 
+//CRUD page to create/update/delete and see all the tasks
 const TasksPage = () => {
   const { auth } = useAuth();
   useStartPage(true, false)
 
+  //Load the page
   if (auth.user && auth.token) {
     return (
       <div>

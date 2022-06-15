@@ -21,7 +21,7 @@ const useStartPage = (isLogged, adminOnly) => {
             } else if (adminOnly && auth.user?.role !== 'administrator') { 
                 navigate('/user/home');
             } else if (tasks.rows.length == 0) {
-                loadTasks(1, auth.token)
+                loadTasks(1)
             }
         } else {
             if (auth.user && auth.token) {

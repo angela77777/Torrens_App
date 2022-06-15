@@ -5,10 +5,12 @@ import useAuth from '../../context/AuthProvider';
 import { ToastContainer } from 'react-toastify';
 import useStartPage from '../../customHooks/useStartPage.js';
 
+//Page to create an user in the database
 const RegisterPage = () => {
   const { auth } = useAuth();
   useStartPage(false, false)
 
+  //Load the page
   if (!auth.user && !auth.token) {
     return (
       <div className="d-flex justify-content-center align-items-center vh-100">

@@ -2,6 +2,7 @@ import { useContext } from 'react';
 import { createContext, useReducer } from 'react';
 import tasksReducer, { tasksInitialState } from '../reducers/tasksReducer';
 import axios from 'axios';
+import useAuth from './AuthProvider';
 
 //Context
 const TasksContext = createContext(tasksInitialState);
@@ -9,13 +10,18 @@ const TasksContext = createContext(tasksInitialState);
 //Create provider
 export function TasksProvider({ children }) {
   const [tasks, dispatch] = useReducer(tasksReducer, tasksInitialState);
+  const { auth } = useAuth()
 
-  const loadTasks = async (page, token) => {
+  /**
+   * @description Method to load tasks according to page (this allow get info by offset)
+   * @param {*} page the current count of calls to the load route
+   */
+  const loadTasks = async (page) => {
     await axios({
       method: 'get',
       url: 'http://localhost:3377/api/tasks/',
       headers: {
-        'x-auth-token': token,
+        'x-auth-token': auth.token,
       },
       params: {
         page: page,
@@ -26,6 +32,7 @@ export function TasksProvider({ children }) {
         const tasks = res.data.tasks;
         const pending = tasks.rows.filter((task) => !task.completed);
         if (page == 1) {
+          //If is the first time load full info
           dispatch({
             type: 'LOAD-SUCESS',
             payload: {
@@ -35,6 +42,7 @@ export function TasksProvider({ children }) {
             },
           });
         } else {
+          //Second > time, only add the info
           dispatch({
             type: 'ADD-TASKS',
             payload: { rows: res.data.tasks.rows},
@@ -50,12 +58,16 @@ export function TasksProvider({ children }) {
       });
   };
 
-  const createTask = async (token, task) => {
+  /**
+   * @description Method that allows to create ONE task according to name and state
+   * @param {*} task the task to create
+   */
+  const createTask = async (task) => {
     await axios({
       method: 'post',
       url: 'http://localhost:3377/api/tasks/',
       headers: {
-        'x-auth-token': token,
+        'x-auth-token': auth.token,
       },
       data: { tasks: [task] },
     })
@@ -76,12 +88,16 @@ export function TasksProvider({ children }) {
       });
   };
 
-  const deleteTask = async (token, task) => {
+  /**
+   * @description Method that allows delete an existing tasks
+   * @param {*} task record to delete
+   */
+  const deleteTask = async (task) => {
     await axios({
       method: 'delete',
       url: 'http://localhost:3377/api/tasks/',
       headers: {
-        'x-auth-token': token,
+        'x-auth-token': auth.token,
       },
       data: { tasks: [task] },
     })
@@ -96,12 +112,15 @@ export function TasksProvider({ children }) {
       });
   }
 
-  const saveTasks = async (token) => {
+  /**
+   * @description save all to send all the changed data to the server
+   */
+  const saveTasks = async () => {
     await axios({
       method: 'put',
       url: 'http://localhost:3377/api/tasks/',
       headers: {
-        'x-auth-token': token,
+        'x-auth-token': auth.token,
       },
       data: { tasks: tasks.rows },
     })
@@ -116,6 +135,9 @@ export function TasksProvider({ children }) {
       });
   }
 
+  /**
+   * @description Method to reset the context information
+   */
   const clearTasks = () => {
     dispatch({
       type: 'RESET',
@@ -123,6 +145,10 @@ export function TasksProvider({ children }) {
     });
   };
 
+  /**
+   * @description Allow edit row information in the context
+   * @param {*} task 
+   */
   const updateTask = (task) => {
     dispatch({
       type: 'UPDATE-ROW',
