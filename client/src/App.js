@@ -6,6 +6,9 @@ import RegisterPage from './pages/RegisterPage/RegisterPage.jsx';
 import TasksPage from './pages/TasksPage/TasksPage.jsx';
 import UsersPage from './pages/UsersPage/UsersPage.jsx';
 
+/**
+ * @description Create all principal paths of the view (Pages)
+ */
 function App() {
   return (
     <Router>

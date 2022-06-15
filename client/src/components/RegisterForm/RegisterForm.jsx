@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import '../generalStyles/form.css';
 import { Link } from 'react-router-dom';
 import InputField from '../InputField/InputField';
 import useAuth from '../../context/AuthProvider';
@@ -9,28 +10,32 @@ import { toast } from 'react-toastify';
  * @returns Register Form component
  */
 const RegisterForm = () => {
-  const { auth, createUser, cleanError } = useAuth()
-  const [formErrors, setErrors] = useState({})
+  const { auth, createUser, cleanError } = useAuth();
+  const [formErrors, setErrors] = useState({});
 
   useEffect(() => {
     if (auth.error?.errors != null) {
-      let errors = auth.error?.errors
-      let formErrorsTemp = {}
+      let errors = auth.error?.errors;
+      let formErrorsTemp = {};
       for (let i = 0; i < errors.length; i++) {
-        Object.getOwnPropertyNames(errors[i]).forEach(function (val, idx, array) {
-          formErrorsTemp[val] = errors[i][val]
+        Object.getOwnPropertyNames(errors[i]).forEach(function (
+          val,
+          idx,
+          array
+        ) {
+          formErrorsTemp[val] = errors[i][val];
         });
       }
-      setErrors(formErrorsTemp)
+      setErrors(formErrorsTemp);
     } else if (auth.error?.message != null) {
       toast.error(auth.error.message, {
         position: toast.POSITION.TOP_CENTER,
-        toastId: auth.error.message
-      })
-      cleanError()
-      setErrors({})
+        toastId: auth.error.message,
+      });
+      cleanError();
+      setErrors({});
     } else {
-      setErrors({})
+      setErrors({});
     }
   }, [auth]);
 

@@ -1,12 +1,15 @@
 import React from 'react';
 import useAuth from '../../context/AuthProvider.jsx';
-import './HomeComponent.css';
+import './index.css';
+import '../generalStyles/card.css';
 
+/**
+ * @description component to present the welcome to the system
+ */
 const HomeComponent = () => {
   const { auth } = useAuth();
-
   return (
-    <div class="abs-center d-flex justify-content-center align-items-center">
+    <div className="abs-center d-flex justify-content-center align-items-center">
       <div className="col-10 col-sm-8 col-md-9 col-lg-11">
         <div className="card greeting">
           <div className="card-body greeting-text">

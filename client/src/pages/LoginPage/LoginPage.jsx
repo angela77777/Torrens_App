@@ -1,20 +1,16 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import LoginForm from '../../components/LoginForm/LoginForm';
 import NavBar from '../../components/NavBar/NavBar.jsx';
 import useAuth from '../../context/AuthProvider';
 import { ToastContainer } from 'react-toastify';
-import { useNavigate  } from 'react-router-dom';
+import useStartPage from '../../customHooks/useStartPage';
 
+//Page to authenticate an user
 const LoginPage = () => {
   const { auth } = useAuth();
-  let navigate = useNavigate();
+  useStartPage(false, false)
 
-  useEffect(() => {
-    if (auth.user && auth.token) {
-      navigate("/user/home")
-    }
-  }, [auth])
-
+  //Load the page
   if (!auth.user && !auth.token) {
     return (
       <div className="d-flex justify-content-center align-items-center vh-100">

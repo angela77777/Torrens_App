@@ -5,6 +5,12 @@ export const usersInitialState = {
     count: 0,
 }
 
+/**
+ * Reducer to control Users behaviour
+ * @param {*} state the state of the users instance
+ * @param {*} action type of dispatch (this executed especific funtionality)
+ * @returns state with changes
+ */
 const usersReducer = (state, action) => {
     const { type, payload } = action
 

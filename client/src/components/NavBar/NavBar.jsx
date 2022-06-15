@@ -7,7 +7,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './index.css';
 import useAuth from '../../context/AuthProvider.jsx';
 import useTasks from '../../context/TasksProvider.jsx';
+import { Link } from 'react-router-dom';
 
+//The nav bar with the user information (if is logged)
 const NavBar = () => {
   const { auth, logOut } = useAuth();
   const { tasks, clearTasks } = useTasks();
@@ -24,7 +26,10 @@ const NavBar = () => {
         {auth.user ? (
           <div className="form-group d-flex justify-content">
             <div className="btn-group">
-              <button className="btn-notification clear-decorations">
+              <Link
+                to={'/user/tasks'}
+                className="btn-notification clear-decorations"
+              >
                 <span className="input-group-text clear-decorations h-100">
                   <FontAwesomeIcon
                     icon={faBell}
@@ -34,7 +39,7 @@ const NavBar = () => {
                 {tasks.rows.length > 0 ? (
                   <span className="bell-badge">{tasks.pending.length}</span>
                 ) : null}
-              </button>
+              </Link>
               <button
                 type="button"
                 className="btn btn-link dropdown-toggle"

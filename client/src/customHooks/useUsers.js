@@ -3,6 +3,10 @@ import useAuth from '../context/AuthProvider'
 import axios from 'axios';
 import usersReducer, { usersInitialState } from '../reducers/usersReducer';
 
+/**
+ * @description Custom hook to get the users from the server when the user is admin
+ * @returns the users loaded from server
+ */
 const useUsers = () => {
     const { auth } = useAuth()
     const [users, dispatch] = useReducer(usersReducer, usersInitialState)
@@ -26,7 +30,6 @@ const useUsers = () => {
                         payload: res.data.users
                     });
                 } else {
-                    console.log(res.data.users)
                     dispatch({
                         type: 'ADD-USERS',
                         payload: res.data.users
@@ -37,7 +40,6 @@ const useUsers = () => {
                 console.log(err);
             });
     }
-
     return { users, loadUsers }
 }
 

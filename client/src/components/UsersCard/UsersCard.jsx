@@ -1,9 +1,13 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
+import '../generalStyles/card.css';
 import { faCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import './UsersCard.css';
+import './index.css';
 import useUsers from '../../customHooks/useUsers';
 
+/**
+ * @description principal component to show the users
+ */
 const UsersCard = () => {
   const { users, loadUsers } = useUsers();
   const [page, setPage] = useState(1);
@@ -17,9 +21,13 @@ const UsersCard = () => {
     setPage(page + 1);
   };
 
-  const listItems = users.rows?.map((user) => <UserRow user={user}></UserRow>);
+  const listItems = users.rows
+    ?.sort((user1, user2) =>
+      user1.names.toLowerCase() < user2.names.toLowerCase() ? -1 : 1
+    )
+    .map((user) => <UserRow user={user} key={user.id}></UserRow>);
   return (
-    <div class="abs-center d-flex justify-content-center align-items-center">
+    <div className="abs-center d-flex justify-content-center align-items-center">
       {users.rows ? (
         <div className="col-10 col-sm-8 col-md-9 col-lg-11">
           <div className="card">
@@ -30,7 +38,7 @@ const UsersCard = () => {
                 empresa Torrens University Australia
               </p>
               <div className="table-wrapper">
-                <table class="table">
+                <table className="table">
                   <thead>
                     <tr className="table-titles">
                       <th>Nombre completo</th>
@@ -68,6 +76,11 @@ const UsersCard = () => {
   );
 };
 
+/**
+ * @description the component row to present information dynamically
+ * @param {*} user record to show
+ * @returns row with user information
+ */
 export const UserRow = ({ user }) => {
   return (
     <tr>
