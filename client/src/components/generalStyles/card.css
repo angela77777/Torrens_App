@@ -1,0 +1,61 @@
+/** General container */
+.abs-center {
+  border-radius: 1rem;
+  padding: 1.5rem;
+  margin: 4rem 0 0 12rem;
+}
+
+.card {
+  border: none;
+  padding: 1.5rem;
+}
+
+/** Table */
+.table {
+  text-align: center;
+  color: var(--text-color);
+  border-collapse: separate;
+  border-spacing: 0px;
+  min-width: max-content;
+}
+
+.table-titles {
+  border: 2px;
+}
+
+.table-wrapper {
+  max-height: 45rem;
+  -ms-overflow-style: none; /* for Internet Explorer, Edge */
+  scrollbar-width: none; /* for Firefox */
+  overflow-y: scroll;
+}
+
+.table-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+thead tr {
+  background-color: var(--primary-color);
+}
+
+th {
+  font-weight: 600;
+  top: 0px;
+  color: var(--secondary-color);
+}
+
+tbody tr:hover {
+  background-color: var(--light2);
+}
+
+td span {
+  justify-content: center;
+  align-self: center;
+}
+
+th,
+td {
+  padding: 0.5rem;
+  height: 4rem;
+  vertical-align: middle;
+}

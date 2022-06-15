@@ -1,15 +1,50 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import './TasksCard.css';
+import './index.css';
+import '../generalStyles/form.css';
+import '../generalStyles/card.css';
 import InputField from '../InputField/InputField.jsx';
-import { useState } from 'react';
+import useTasks from '../../context/TasksProvider';
+import useAuth from '../../context/AuthProvider';
 
 const TasksCard = () => {
-  const [editState, setEditState] = useState(false)
+  const { auth } = useAuth();
+  const [editState, setEditState] = useState(false);
+  const { tasks, updateTask, createTask, loadTasks, deleteTask, saveTasks } =
+    useTasks();
 
+  const handleCreateSubmit = (event) => {
+    event.preventDefault();
+    const { taskName, state } = event.target.elements;
+    createTask(auth.token, {
+      name: taskName.value,
+      completed: state.value,
+      userId: auth.user.id,
+    });
+    event.target.reset();
+  };
+
+  const handleSaveSubmit = () => {
+    saveTasks(auth.token);
+    setEditState(false);
+  };
+
+  const onClickMore = () => {
+    loadTasks(tasks.page + 1, auth.token);
+  };
+
+  const listItems = tasks.rows?.map((task, index) => (
+    <TaskRow
+      editState={editState || !tasks.sync}
+      task={task}
+      updateTask={updateTask}
+      deleteTask={deleteTask}
+      key={index}
+    />
+  ));
   return (
-    <div class="abs-center d-flex justify-content-center align-items-center">
+    <div className="abs-center d-flex justify-content-center align-items-center">
       <div className="col-10 col-sm-8 col-md-9 col-lg-11">
         <div className="card">
           <div className="card-body">
@@ -18,14 +53,17 @@ const TasksCard = () => {
               A continuación, se presentan en orden las tareas pendientes por
               realizar y las tareas completadas
             </p>
-            <form className="form-container">
-              <div className="d-flex flex-row justify-content-between flex-wrap w-100">
+            <form
+              className="form-container d-flex flex-row justify-content-between align-items-start flex-wrap w-100"
+              onSubmit={handleCreateSubmit}
+            >
+              <div className="d-flex flex-row justify-content-between flex-wrap col-12 col-md-7 col-lg-9">
                 <InputField
                   type="text"
                   placeholder="Nueva tarea"
-                  ariaLabel="correo"
+                  ariaLabel="Nueva tarea"
                   name="taskName"
-                  inputClass="col-12 col-md-5 col-lg-6"
+                  inputClass="col-12 col-md-7 col-lg-8"
                   required={true}
                 />
                 <div className="form-group col-12 col-md-2 col-lg-3">
@@ -37,28 +75,42 @@ const TasksCard = () => {
                       required
                     >
                       <option value="false">Pendiente</option>
-                      <option value="true">Administrador</option>
+                      <option value="true">Completada</option>
                     </select>
                   </div>
                 </div>
+              </div>
+              <button
+                type="submit"
+                className="btn secondary-button col-12 col-md-4 col-lg-2"
+              >
+                Añadir
+              </button>
+            </form>
+            <div className="col-6 col-md-4 col-lg-3">
+              {!editState && tasks.sync ? (
                 <button
                   type="submit"
-                  className="btn secondary-button col-12 col-md-4 col-lg-2"
+                  className="btn submit-button mb-4"
+                  onClick={() => {
+                    setEditState(true);
+                  }}
                 >
-                  Añadir
+                  Editar
                 </button>
-              </div>
-            </form>
-            <div className='col-6 col-md-4 col-lg-3'>
-            <button type="submit" className="btn submit-button">
-              Editar
-            </button>
+              ) : (
+                <button
+                  type="submit"
+                  className="btn submit-button mb-4"
+                  onClick={handleSaveSubmit}
+                >
+                  Guardar
+                </button>
+              )}
             </div>
-            <button type="submit" hidden className="btn submit-button">
-              Guardar
-            </button>
+
             <div className="table-wrapper">
-              <table class="table">
+              <table className="table">
                 <thead>
                   <tr className="primary-color">
                     <th>Estado</th>
@@ -67,45 +119,19 @@ const TasksCard = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>
-                      <div class="form-check check-box d-flex">
-                        <input
-                          type="checkbox"
-                          className="form-check-input"
-                          value=""
-                          id="flexCheckDisabled"
-                          disabled
-                        />
-                      </div>
-                    </td>
-                    <td className="text-task">
-                      <input
-                        disabled
-                        type="text"
-                        class="form-control"
-                        placeholder="Lorem ipsum dolor sit amet consectetur adipisicing elit."
-                        aria-label="Tarea"
-                      ></input>
-                    </td>
-                    <td>
-                      <div className="form-group d-flex justify-content-center">
-                        <button className="btn-delete-task clear-decorations">
-                          <span className="input-group-text clear-decorations h-100">
-                            <FontAwesomeIcon
-                              icon={faTrash}
-                              className="primary-color delete"
-                            />
-                          </span>
+                  {listItems}
+                  {tasks.count > tasks.rows.length ? (
+                    <tr>
+                      <td colSpan="4">
+                        <button
+                          className="btn secondary-button"
+                          onClick={onClickMore}
+                        >
+                          Ver más
                         </button>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td colspan="4">
-                      <button className="btn secondary-button">Ver más</button>
-                    </td>
-                  </tr>
+                      </td>
+                    </tr>
+                  ) : null}
                 </tbody>
               </table>
             </div>
@@ -113,6 +139,75 @@ const TasksCard = () => {
         </div>
       </div>
     </div>
+  );
+};
+
+export const TaskRow = ({ editState, task, updateTask, deleteTask }) => {
+  const { auth } = useAuth();
+
+  const onHandleChange = (event) => {
+    let temp = {
+      id: task.id,
+      userId: task.userId,
+      completed: task.completed,
+      name: task.name,
+      ...task,
+    };
+
+    const name = event.target.name;
+    const value =
+      name === 'completed' ? Boolean(event.target.value) : event.target.value;
+    temp[name] = value;
+
+    updateTask(temp);
+  };
+
+  const onDelete = () => {
+    deleteTask(auth.token, task);
+  };
+
+  return (
+    <tr>
+      <td>
+        <div className="form-check check-box d-flex">
+          <input
+            type="checkbox"
+            name="completed"
+            className="form-check-input"
+            checked={task.completed}
+            id="flexCheckDisabled"
+            disabled={!editState}
+            onChange={onHandleChange}
+          />
+        </div>
+      </td>
+      <td className="text-task">
+        <input
+          disabled={!editState}
+          name="name"
+          type="text"
+          className="form-control"
+          value={task.name}
+          aria-label="Tarea"
+          onChange={onHandleChange}
+        ></input>
+      </td>
+      <td>
+        <div className="form-group d-flex justify-content-center">
+          <button
+            className="btn-delete-task clear-decorations"
+            onClick={onDelete}
+          >
+            <span className="input-group-text clear-decorations h-100">
+              <FontAwesomeIcon
+                icon={faTrash}
+                className="primary-color delete"
+              />
+            </span>
+          </button>
+        </div>
+      </td>
+    </tr>
   );
 };
 

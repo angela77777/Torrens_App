@@ -10,7 +10,7 @@ const TasksContext = createContext(tasksInitialState);
 export function TasksProvider({ children }) {
   const [tasks, dispatch] = useReducer(tasksReducer, tasksInitialState);
 
-  const loadTasks = async (token) => {
+  const loadTasks = async (page, token) => {
     await axios({
       method: 'get',
       url: 'http://localhost:3377/api/tasks/',
@@ -18,34 +18,115 @@ export function TasksProvider({ children }) {
         'x-auth-token': token,
       },
       params: {
-        page: 1,
+        page: page,
         limit: 10,
       },
     })
       .then((res) => {
         const tasks = res.data.tasks;
         const pending = tasks.rows.filter((task) => !task.completed);
-        const completed = tasks.rows.filter((task) => !task.completed);
-
-        dispatch({
-          type: 'LOAD-SUCESS',
-          payload: {
-            count: tasks.count,
-            rows: tasks.rows,
-            pending: pending,
-            completed: completed,
-          },
-        });
+        if (page == 1) {
+          dispatch({
+            type: 'LOAD-SUCESS',
+            payload: {
+              count: tasks.count,
+              rows: tasks.rows,
+              pending: pending,
+            },
+          });
+        } else {
+          dispatch({
+            type: 'ADD-TASKS',
+            payload: { rows: res.data.tasks.rows},
+          });
+          dispatch({
+            type: 'UPDATE-PAGE',
+            payload: { page: page },
+          });
+        }
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
+  const createTask = async (token, task) => {
+    await axios({
+      method: 'post',
+      url: 'http://localhost:3377/api/tasks/',
+      headers: {
+        'x-auth-token': token,
+      },
+      data: { tasks: [task] },
+    })
+      .then((res) => {
+        dispatch({
+          type: 'ADD-TASKS',
+          payload: { rows: res.data.tasks },
+        });
+        if (task.completed == "false") {
+          dispatch({
+            type: 'ADD-PENDINGS',
+            payload: { pending: res.data.tasks },
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const deleteTask = async (token, task) => {
+    await axios({
+      method: 'delete',
+      url: 'http://localhost:3377/api/tasks/',
+      headers: {
+        'x-auth-token': token,
+      },
+      data: { tasks: [task] },
+    })
+      .then((res) => {
+        dispatch({
+          type: 'DELETE-TASK',
+          payload: {task}
+        })
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  const saveTasks = async (token) => {
+    await axios({
+      method: 'put',
+      url: 'http://localhost:3377/api/tasks/',
+      headers: {
+        'x-auth-token': token,
+      },
+      data: { tasks: tasks.rows },
+    })
+      .then((res) => {
+        dispatch({
+          type: 'SYNC-SUCCESS',
+          payload: null,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
   const clearTasks = () => {
     dispatch({
       type: 'RESET',
-      payload: null
+      payload: null,
+    });
+  };
+
+  const updateTask = (task) => {
+    dispatch({
+      type: 'UPDATE-ROW',
+      payload: { task: task },
     });
   };
 
@@ -53,6 +134,10 @@ export function TasksProvider({ children }) {
     tasks,
     loadTasks,
     clearTasks,
+    updateTask,
+    createTask,
+    deleteTask,
+    saveTasks
   };
 
   return (

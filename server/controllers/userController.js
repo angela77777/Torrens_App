@@ -15,17 +15,16 @@ dotenv.config()
  */
 export const getUsers = async (req, res) => {
     try {
-        if (req.auth.role != 'administrator') {
+        if (req.auth.user.role !== 'administrator') {
             return res.status(403).json({ message: "You don't have permission to get users" }).send()
         }
 
-        const { page, limit } = req.body
+        const { page, limit } = req.query
         let offset = (page - 1) * limit
 
-        let users = await User.findAndCountAll({ attributes: { exclude: ['password'] }, offset: offset, limit: limit, order: [
+        let users = await User.findAndCountAll({ attributes: { exclude: ['password'] }, offset: offset, limit: Number(limit), order: [
             ['id', 'ASC']
         ]})
-
         return res.status(200).json({ users: users })
     } catch (err) {
         return res.status(500).json({ message: err.message })

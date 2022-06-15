@@ -1,6 +1,7 @@
 import React from 'react';
 import useAuth from '../../context/AuthProvider.jsx';
-import './HomeComponent.css';
+import './index.css';
+import '../generalStyles/card.css';
 
 const HomeComponent = () => {
   const { auth } = useAuth();

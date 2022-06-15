@@ -12,7 +12,7 @@ export const validateAuthInfo = () => {
         body('password')
             .isLength({ min: 7 })
             .withMessage('Password must have at least 7 characters')
-            .matches(/^(?=.*[0-9])(?=.*[A-Z])([a-zA-Z0-9]+)$/)
+            .matches("^(?=.*[A-Z])(?=.*[0-9]).*$")
             .withMessage('Password needs at least one capital letter and one number')
     ]
 }

@@ -1,0 +1,7 @@
+/** User state - True / False */
+.state-connected {
+  color: #00a700;
+}
+.state-disconnected {
+  color: #c30c00;
+}

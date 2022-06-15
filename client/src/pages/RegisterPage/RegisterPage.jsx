@@ -1,19 +1,13 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import NavBar from '../../components/NavBar/NavBar.jsx';
 import RegisterForm from '../../components/RegisterForm/RegisterForm.jsx';
 import useAuth from '../../context/AuthProvider';
 import { ToastContainer } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+import useStartPage from '../../customHooks/useStartPage.js';
 
 const RegisterPage = () => {
   const { auth } = useAuth();
-  let navigate = useNavigate();
-
-  useEffect(() => {
-    if (auth.user && auth.token) {
-      navigate('/user/home');
-    }
-  }, [auth]);
+  useStartPage(false, false)
 
   if (!auth.user && !auth.token) {
     return (

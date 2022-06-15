@@ -1,19 +1,13 @@
-import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
 import useAuth from '../../context/AuthProvider';
 import NavBar from '../../components/NavBar/NavBar.jsx';
 import SideBar from '../../components/SideBar/SideBar.jsx';
 import TasksCard from '../../components/TasksCard/TasksCard.jsx';
+import useStartPage from '../../customHooks/useStartPage';
 
 const TasksPage = () => {
   const { auth } = useAuth();
-  let navigate = useNavigate();
-
-  useEffect(() => {
-    if (!auth.token) {
-      navigate('/');
-    }
-  }, [auth]);
+  useStartPage(true, false)
 
   if (auth.user && auth.token) {
     return (

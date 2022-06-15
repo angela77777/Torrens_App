@@ -9,8 +9,8 @@ export const authInitialState = {
 
 /**
  * @description Reducer to control Authentication behaviour
- * @param {*} _ the state of the ath
- * @param {String} action type of dispatch
+ * @param {*} state the state of the auth
+ * @param {String} action type of dispatch (this executed especific funtionality)
  * @returns state with changes
  */
 const authReducer = (state, action) => {
