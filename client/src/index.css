@@ -1,0 +1,18 @@
+:root {
+  --primary-color: #ff5000;
+  --secondary-color: #ffffff;
+  --background-color: #ffede5;
+  --hover-color: #f24400;
+  --text-color: #393939;
+  --light: #ff844c;
+  --light2: #fffaf7;
+}
+
+body {
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--background-color);
+  color: var(--text-color);
+}

@@ -10,7 +10,7 @@ import Task from "../models/task.js";
  */
 export const getTasks = async (req, res) => {
     try {
-        const { page, limit } = req.body
+        const { page, limit } = req.query
         let offset = (page - 1) * limit
 
         let user = await User.findOne({ where: { id: req.auth.user.id }, attributes: ['role'] })
@@ -20,7 +20,7 @@ export const getTasks = async (req, res) => {
             whereClause = {}
         }
 
-        let tasks = await Task.findAndCountAll({ where: whereClause, include: [{ model: User, attributes: ['names', 'lastNames'] }], offset: offset, limit: limit, subQuery: false })
+        let tasks = await Task.findAndCountAll({ where: whereClause, include: [{ model: User, attributes: ['names', 'lastNames'] }], offset: offset, limit: Number(limit), subQuery: false })
 
         return res.status(200).json({ tasks: tasks })
     } catch (err) {

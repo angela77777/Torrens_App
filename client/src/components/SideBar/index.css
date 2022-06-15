@@ -1,0 +1,28 @@
+/** General container */
+.sidebar {
+  background-color: var(--primary-color);
+  box-shadow: 0px 1px 5px 1px rgba(0, 0, 0, 0.3);
+  position: fixed;
+  height: 100%;
+  padding-top: 5rem;
+  top: 0;
+  left: 0;
+}
+
+/** Options */
+.sidebar-icon {
+  color: var(--secondary-color);
+  height: 1.2rem;
+  margin-right: 1rem;
+}
+
+.sidebar li a span {
+  color: var(--secondary-color);
+}
+
+.sidebar li:active,
+.sidebar li:hover {
+  background-color: var(--light);
+  border-radius: 8px;
+  transition: 0.2s;
+}
