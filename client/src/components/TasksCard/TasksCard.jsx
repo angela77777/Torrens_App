@@ -18,6 +18,7 @@ const TasksCard = () => {
   const handleCreateSubmit = (event) => {
     event.preventDefault();
     const { taskName, state } = event.target.elements;
+
     createTask({
       name: taskName.value,
       completed: state.value,
@@ -185,7 +186,7 @@ export const TaskRow = ({ editState, task, updateTask, deleteTask }) => {
             type="checkbox"
             name="completed"
             className="form-check-input"
-            checked={checkState}
+            checked={task.completed}
             id="flexCheckDisabled"
             disabled={!editState}
             onChange={onHandleChange}

@@ -8,13 +8,9 @@ import useAuth from '../../context/AuthProvider';
 //The side bar view with information according to auth and role
 const SideBar = () => {
   const { auth } = useAuth();
+
   return (
     <div className="main-container d-flex">
-      <div className="menu-toggle">
-        <div className="hamburger">
-          <span></span>
-        </div>
-      </div>
       <aside className="sidebar">
         <ul className="list-unstyled px-2">
           <li>

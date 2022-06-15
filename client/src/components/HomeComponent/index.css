@@ -14,7 +14,7 @@
 }
 
 /** Media queries */
-@media (max-width: 920px) {
+@media (max-width: 991px) {
   .bigtitle {
     font-size: 3rem;
   }
