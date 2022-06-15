@@ -3,24 +3,26 @@ import { useNavigate } from 'react-router-dom';
 import useAuth from '../../context/AuthProvider';
 import NavBar from '../../components/NavBar/NavBar.jsx';
 import SideBar from '../../components/SideBar/SideBar.jsx';
+import HomeComponent from '../../components/HomeComponent/HomeComponent.jsx';
 import useTasks from '../../context/TasksProvider.jsx';
 
 const HomePage = () => {
-  const { auth } = useAuth()
-  const { tasks, loadTasks } = useTasks()
-  let navigate = useNavigate()
+  const { auth } = useAuth();
+  const { tasks, loadTasks } = useTasks();
+  let navigate = useNavigate();
 
   useEffect(() => {
     if (!auth.token) {
       navigate('/');
-    } else if(tasks.rows.length == 0){
-      loadTasks(auth.token)
+    } else if (tasks.rows.length == 0) {
+      loadTasks(auth.token);
     }
   }, [auth]);
 
   if (auth.user && auth.token) {
     return (
       <div>
+        <HomeComponent />
         <SideBar />
         <NavBar />
       </div>

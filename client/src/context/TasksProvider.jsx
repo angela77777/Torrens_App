@@ -24,7 +24,6 @@ export function TasksProvider({ children }) {
     })
       .then((res) => {
         const tasks = res.data.tasks;
-
         const pending = tasks.rows.filter((task) => !task.completed);
         const completed = tasks.rows.filter((task) => !task.completed);
 
@@ -37,7 +36,6 @@ export function TasksProvider({ children }) {
             completed: completed,
           },
         });
-        console.log(tasks);
       })
       .catch((err) => {
         console.log(err);

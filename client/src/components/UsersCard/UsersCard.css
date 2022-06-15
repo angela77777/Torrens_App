@@ -2,8 +2,7 @@
 .abs-center {
   border-radius: 1rem;
   padding: 1.5rem;
-  min-height: 70vh;
-  margin: 3.8rem 0 0 12rem;
+  margin: 4rem 0 0 12rem;
 }
 .card {
   border: none;
@@ -19,11 +18,17 @@
   min-width: max-content;
 }
 .table-wrapper {
-  max-height: 290px;
+  max-height: 45rem;
+  -ms-overflow-style: none; /* for Internet Explorer, Edge */
+  scrollbar-width: none; /* for Firefox */
   overflow-y: scroll;
-  overflow-x: scroll;
   margin: 20px;
 }
+
+.table-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
 thead tr {
   background-color: var(--primary-color);
 }

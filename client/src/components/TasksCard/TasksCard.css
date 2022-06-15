@@ -1,15 +1,18 @@
 /** Table items */
-.btn-delete-task {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 .text-task {
   text-align: justify;
 }
 .check-box {
   align-items: center;
   justify-content: center;
+}
+input[type='checkbox']:disabled {
+  border: 1px solid var(--text-color);
+}
+input[type='text']:disabled {
+  background-color: var(--secondary-color);
+  border: none;
+}
+input[type='text']:disabled:hover {
+  background-color: var(--light2);
 }

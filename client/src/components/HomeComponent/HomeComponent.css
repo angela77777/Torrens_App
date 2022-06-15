@@ -1,0 +1,17 @@
+.bigtitle {
+  text-align: center;
+  font-size: 4rem;
+}
+.greeting {
+  height: 80vh;
+}
+.greeting-text {
+  position: relative;
+  top: 30%;
+}
+
+@media (max-width: 920px) {
+  .bigtitle {
+    font-size: 3rem;
+  }
+}
